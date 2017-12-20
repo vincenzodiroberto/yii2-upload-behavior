@@ -1,6 +1,6 @@
 <?php
 
-namespace mongosoft\file;
+namespace stesi\file;
 
 use Imagine\Image\ManipulatorInterface;
 use Yii;

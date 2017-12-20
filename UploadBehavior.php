@@ -1,6 +1,6 @@
 <?php
 
-namespace mongosoft\file;
+namespace stesi\file;
 
 use Closure;
 use Yii;
@@ -123,12 +123,18 @@ class UploadBehavior extends Behavior
         ];
     }
 
+
     /**
      * This method is invoked before validation starts.
      */
     public function beforeValidate()
     {
         /** @var BaseActiveRecord $model */
+        $this->validateImage();
+
+    }
+
+    private function validateImage(){
         $model = $this->owner;
         if (in_array($model->scenario, $this->scenarios)) {
             if (($file = $model->getAttribute($this->attribute)) instanceof UploadedFile) {
@@ -146,12 +152,13 @@ class UploadBehavior extends Behavior
             }
         }
     }
-
     /**
      * This method is called at the beginning of inserting or updating a record.
      */
     public function beforeSave()
     {
+
+        $this->validateImage();
         /** @var BaseActiveRecord $model */
         $model = $this->owner;
         if (in_array($model->scenario, $this->scenarios)) {
