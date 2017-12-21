@@ -44,7 +44,7 @@ class UploadBehavior extends Behavior
      * @event Event an event that is triggered after a file is uploaded.
      */
     const EVENT_AFTER_UPLOAD = 'afterUpload';
-
+public $alreadyUploaded = false;
     /**
      * @var string the attribute which holds the attachment.
      */
@@ -130,11 +130,16 @@ class UploadBehavior extends Behavior
     public function beforeValidate()
     {
         /** @var BaseActiveRecord $model */
-        $this->validateImage();
+       // $this->validateImage();
 
     }
 
     private function validateImage(){
+        if($this->alreadyUploaded){
+            return true;
+        }else{
+            $this->alreadyUploaded = true;
+        }
         $model = $this->owner;
         if (in_array($model->scenario, $this->scenarios)) {
             if (($file = $model->getAttribute($this->attribute)) instanceof UploadedFile) {
